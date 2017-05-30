@@ -20,5 +20,6 @@ app.on('ready', _ => {
 })
 
 app.on('quit', _ => {
+    mainWindow = null
     console.log('Closing')
 })

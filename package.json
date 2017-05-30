@@ -13,6 +13,6 @@
   "author": "Patrick Christensen",
   "license": "ISC",
   "dependencies": {
-    "electron-compile": "^6.4.1"
+    "electron": "^1.6.10"
   }
 }

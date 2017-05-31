@@ -4,20 +4,24 @@ const countdown = require('./countdown')
 
 const { app, BrowserWindow, ipcMain:ipc } = electron
 
-let mainWindow
+const windows = []
 
 app.on('ready', _ => {
+    [1, 2, 3].forEach(_ => {
 
+        let win = new BrowserWindow({
+            height: 720,
+            width: 1280
+        })
+
+        win.loadURL(`file://${__dirname}/index.html`)
+
+        win.on('closed', _ => app.quit)
+
+        windows.push(win)
+    })
     console.log('app is ready!');
 
-    mainWindow = new BrowserWindow({
-        height: 720,
-        width: 1280
-    })
-
-    mainWindow.loadURL(`file://${__dirname}/index.html`)
-
-    mainWindow.on('closed', _ => app.quit)
 })
 
 app.on('quit', _ => {
@@ -27,6 +31,8 @@ app.on('quit', _ => {
 
 ipc.on('countdown-start', _ =>{
     countdown(count => {
-        mainWindow.webContents.send('countdown-update', count)
+        windows.forEach(win => {
+            win.webContents.send('countdown-update', count)
+        })
     })
 })

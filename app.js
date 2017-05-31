@@ -1,5 +1,6 @@
 const electron = require('electron')
 const path = require('path')
+const countdown = require('./countdown')
 
 const { app, BrowserWindow, ipcMain:ipc } = electron
 
@@ -24,10 +25,8 @@ app.on('quit', _ => {
     console.log('Closing')
 })
 
-ipc.on('start', _ =>{
-    console.log('started')
-    setTimeout(_ => {
-        console.log('main is done')
-        mainWindow.webContents.send('done')
-    }, 3000)
+ipc.on('countdown-start', _ =>{
+    countdown(count => {
+        mainWindow.webContents.send('countdown-update', count)
+    })
 })

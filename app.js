@@ -26,4 +26,8 @@ app.on('quit', _ => {
 
 ipc.on('start', _ =>{
     console.log('started')
+    setTimeout(_ => {
+        console.log('main is done')
+        mainWindow.webContents.send('done')
+    }, 3000)
 })

@@ -1,7 +1,7 @@
 const electron = require('electron')
 const path = require('path')
 
-const { app, BrowserWindow } = electron
+const { app, BrowserWindow, ipcMain:ipc } = electron
 
 let mainWindow
 
@@ -22,4 +22,8 @@ app.on('ready', _ => {
 app.on('quit', _ => {
     mainWindow = null
     console.log('Closing')
+})
+
+ipc.on('start', _ =>{
+    console.log('started')
 })
